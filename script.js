@@ -33,12 +33,18 @@ const questions = [
 
 let currentQuestion = 0;
 let score = 0;
+let streak = 0;
+let highScore = localStorage.getItem("highScore") || 0;
 
 const questionNumber = document.getElementById("questionNumber");
 const question = document.getElementById("question");
 const options = document.getElementById("options");
 const nextBtn = document.getElementById("nextBtn");
 const result = document.getElementById("result");
+const highScoreDisplay = document.getElementById("highScore");
+const streakDisplay = document.getElementById("streak");
+
+highScoreDisplay.textContent = highScore;
 
 function showQuestion() {
 
@@ -71,11 +77,15 @@ function checkAnswer(button, selectedAnswer) {
     const correctAnswer = questions[currentQuestion].answer;
 
     if (selectedAnswer === correctAnswer) {
-        button.classList.add("correct");
-        score++;
-    } else {
-        button.classList.add("wrong");
-    }
+    button.classList.add("correct");
+    score++;
+    streak++;
+} else {
+    button.classList.add("wrong");
+    streak = 0;
+}
+
+streakDisplay.textContent = streak;
 
     document.querySelectorAll(".option").forEach(btn => {
         btn.disabled = true;
@@ -95,6 +105,12 @@ nextBtn.addEventListener("click", () => {
 
         result.textContent =
             `🎉 Your Score: ${score} / ${questions.length}`;
+            if (score > highScore) {
+    highScore = score;
+    localStorage.setItem("highScore", highScore);
+}
+
+highScoreDisplay.textContent = highScore;
 
         nextBtn.textContent = "Restart Quiz";
 

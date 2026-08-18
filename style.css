@@ -86,3 +86,10 @@ h1 {
     font-size: 20px;
     font-weight: bold;
 }
+
+.stats {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #4f46e5;
+}
